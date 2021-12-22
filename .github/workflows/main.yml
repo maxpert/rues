@@ -25,7 +25,7 @@ jobs:
       - name: Compile and release
         uses: rust-build/rust-build.action@latest
         env:
-          EXTRA_FILES: README.md LICENSE stress_test
+          EXTRA_FILES: README.md LICENSE
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           ARCHIVE_TYPES: ${{ matrix.archive }}
