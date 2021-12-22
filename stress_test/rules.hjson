@@ -1,0 +1,5 @@
+{
+    filter_role: "[?roles[?@=='dolor']] | length(@)"
+    filter_active: "[?isActive] | length(@)"
+    filter_age: "[?age<`35`] | length(@)"
+}

@@ -1,0 +1,11 @@
+POST http://localhost:8080/eval/filter_role
+Content-Type: application/json
+@./users.json
+
+POST http://localhost:8080/eval/filter_age
+Content-Type: application/json
+@./users.json
+
+POST http://localhost:8080/eval/filter_active
+Content-Type: application/json
+@./users.json
