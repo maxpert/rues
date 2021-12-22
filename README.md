@@ -6,9 +6,9 @@ arbitrary JSON. It effectively is a General purpose logical expression evaluatio
 logical expression. This in turn can allow you implement complex stuff like RBAC, 
 Policy engines etc. Having out of box advantages for:
 
- - Lean and Zippy - Checkout initial benchmarks below. Under 20 MB with 1 CPU one will easily do 10K RPS. 
+ - Lean and Zippy - Checkout initial benchmarks below. Under `20 MB` with single CPU one will easily do 10K RPS. 
  - Dynamic reloadable - Allowing you to make changes in `rules.yaml` on the fly without new deployments.
- - HTTP & JSON - Ubiquitous across polyglot frameworks! No custom protocols, no shenanigans. 
+ - HTTP & JSON - Ubiquitous! No custom protocols, no shenanigans. 
 
 ## Usage
 
@@ -58,3 +58,6 @@ Success       [ratio]                           100.00%
 Status Codes  [code:count]                      200:100000  
 Error Set:
 ```
+
+All the rules, and data has been shipped under `stress_test`. Feel free to share your results, and I will be more 
+than happy to include your results.
