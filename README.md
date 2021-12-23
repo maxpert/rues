@@ -1,14 +1,17 @@
-# Rues - Rule evaluation sidecar
+# RuES - JMES Evaluation as Service 
 
-Rues is a minimal Rule evaluation side-car, that uses [JMESPath](https://jmespath.org/) and it can handle 
-arbitrary JSON. It effectively is a General purpose logical expression evaluation, just like 
+RuES is a minimal JMES expression evaluation side-car, that uses [JMESPath](https://jmespath.org/) and it can handle 
+arbitrary JSON. Which effectively makes it general purpose logical expression evaluation engine, just like 
 [some](https://zerosteiner.github.io/rule-engine/) Python libraries that used to evaluate 
-logical expression. This in turn can allow you implement complex stuff like RBAC, 
-Policy engines etc. Having out of box advantages for:
+logical expression. This in turn can allow you implement complex stuff like Rule engine, 
+RBAC, or Policy engines etc. 
 
- - Lean and Zippy - Checkout initial benchmarks below. Under `20 MB` with single CPU one will easily do 10K RPS. 
- - Dynamic reloadable - Allowing you to make changes in `rules.hjson` on the fly without new deployments.
- - HTTP & JSON - Ubiquitous! No custom protocols, no shenanigans. 
+Here is what makes RuES special:
+
+ - **Lean and Zippy** - Checkout initial benchmarks below. Under `20 MB` with single CPU one will easily do 10K RPS. 
+ - **Zero restarts** - Add/remove rules on fly by making changes in `rules.hjson` without restarting.
+ - **HTTP & JSON** - Ubiquitous! No custom protocols, no shenanigans.
+ - **UNIX philosophy** - Only evaluates rules, no fancy hooks or integrations. Dead simple!
 
 ## Usage
 
