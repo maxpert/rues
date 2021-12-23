@@ -7,20 +7,23 @@ logical expression. This in turn can allow you implement complex stuff like RBAC
 Policy engines etc. Having out of box advantages for:
 
  - Lean and Zippy - Checkout initial benchmarks below. Under `20 MB` with single CPU one will easily do 10K RPS. 
- - Dynamic reloadable - Allowing you to make changes in `rules.yaml` on the fly without new deployments.
+ - Dynamic reloadable - Allowing you to make changes in `rules.hjson` on the fly without new deployments.
  - HTTP & JSON - Ubiquitous! No custom protocols, no shenanigans. 
 
 ## Usage
 
-Make sure you have `rules.yaml` in your current working directory when launching `rudo`. Given following example
+Make sure you have `rules.hjson` in your current working directory when launching `rudo`. Given following example
 rules:
 
-```yaml
-example_one: value == `2`
-example_two: a.b
+```hjson
+{
+  example_one: "value == `2`"
+  example_two: "a.b"
+}
 ```
 
-Simple use `curl` to test:
+Each rule is exposed under `/eval/{rule_name}` as `POST` endpoint, which in turn can be posted payload to evaluate
+the expression. Simple use `curl` to test:
 
 ```
 > curl -X POST http://localhost:8080/eval/example_one -H 'Content-Type: application/json' -d '{"value": 2}'
