@@ -1490,7 +1490,7 @@ dependencies = [
 
 [[package]]
 name = "rues"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "actix-http",
  "actix-server",
