@@ -1,6 +1,6 @@
-# Rudo - Rule evaluation sidecar
+# Rues - Rule evaluation sidecar
 
-Rudo is a minimal Rule evaluation side-car, that uses [JMESPath](https://jmespath.org/) and it can handle 
+Rues is a minimal Rule evaluation side-car, that uses [JMESPath](https://jmespath.org/) and it can handle 
 arbitrary JSON. It effectively is a General purpose logical expression evaluation, just like 
 [some](https://zerosteiner.github.io/rule-engine/) Python libraries that used to evaluate 
 logical expression. This in turn can allow you implement complex stuff like RBAC, 
@@ -12,7 +12,7 @@ Policy engines etc. Having out of box advantages for:
 
 ## Usage
 
-Make sure you have `rules.hjson` in your current working directory when launching `rudo`. Given following example
+Make sure you have `rules.hjson` in your current working directory when launching `rues`. Given following example
 rules:
 
 ```hjson

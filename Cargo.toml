@@ -1,10 +1,10 @@
 [package]
-name = "rudo"
+name = "rues"
 version = "0.1.2"
 edition = "2021"
-description = "Rudo is a simple rule evaluation sidecar"
+description = "Rues is a rule evaluation sidecar"
 license = "MIT"
-repository = "https://github.com/maxpert/rudo"
+repository = "https://github.com/maxpert/rues"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -24,4 +24,4 @@ notify = "^4.0.0"
 cached = "0.26.2"
 
 [[bin]]
-name = "rudo"
+name = "rues"
