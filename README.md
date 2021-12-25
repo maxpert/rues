@@ -35,6 +35,32 @@ the expression. Simple use `curl` to test:
 {"expression":"a.b","rule":"example_two","is_truthy":true,"exp_value":"\"Hello\""}
 ```
 
+## Additional functions
+
+In addition to [built-in functions](https://jmespath.org/proposals/functions.html#built-in-functions) of JMES, there 
+additional are following additional functions:
+
+ - `string[] match(string $regex, string $element)` - Returns an array of all groups of regex matching or a `null` if
+   there is no match. Regex specs can be found [here](https://github.com/rust-lang/regex). Regexes are compiled 
+   and cached in LRU order.
+ - `number from_datetime(string $element, string $format = 'rfc3339')` (To be implemented yet) - Converts 
+   datetime in given format to a timestamp. The timestamp then in turn can be used to 
+   do comparisons or reformatting. 
+ - `string to_datetime(number $element, , string $format = 'rfc3339')` (To be implemented yet) - Converts
+   timestamp to a given string format.
+ - `bool in_geo_fence(number[] $center, number $radius, number[] $element)` (To be implemented yet) - Returns `true`
+   or `false` if the `$element` lies within the `$radius` of `$center`.
+ - `number[][] filter_in_geo_fence(number[] $center, number $radius, number[][] $elements) ` (To be implemented yet) - 
+   Returns all elements that lie within geo fence of given radius and center.
+ - `bool valid_email(string $element)` (To be implemented yet) - Returns `true` or `false` based on email format.
+ - `bool match_glob(string $pattern, string $element)` (To be implemented yet) - Returns `true` or `false` 
+   if the `$element` is a glob match of the `$pattern`.
+
+## Configuration variables
+
+ - `CONFIG_PATH` - path to rules file, file can be `.json`, `.yaml`, or `.hjson`. Default: `rules.hjson`
+ - `BIND_ADDRESS` - service address to bind to. Default: `0.0.0.0:8080`
+
 ## Benchmarks
 
 My brief stress testing shows with a single CPU core (single worker), 3 rules, and payload size of 1.6 KB. Server was 
