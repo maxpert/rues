@@ -17,7 +17,10 @@ impl RegexFn {
     pub fn new() -> RegexFn {
         RegexFn {
             signature: Signature::new(
-                vec![ArgumentType::String, ArgumentType::String],
+                vec![
+                    ArgumentType::String,
+                    ArgumentType::Union(vec![ArgumentType::String, ArgumentType::Null])
+                ],
                 None,
             )
         }
@@ -48,6 +51,10 @@ impl RegexFn {
 impl Function for RegexFn {
     fn evaluate(&self, args: &[Rcvar], ctx: &mut Context<'_>) -> Result<Rcvar, JmespathError> {
         self.signature.validate(args, ctx)?;
+        if args[1].is_null() {
+            return Ok(Rcvar::new(Variable::Null));
+        }
+
         let regex_str = args[0].as_string().ok_or_else(|| {
             JmespathError::new(
                 "",
@@ -105,6 +112,18 @@ mod regex_tests {
     #[test]
     fn test_match_returns_null_unmatched_segments_in_regex() {
         let exp = compile_expr("match('foo', a.b)".to_string()).unwrap();
+        let r = exp.search(json!({
+            "a": {
+                "b": "bar"
+            }
+        })).unwrap();
+        assert!(!r.is_truthy());
+        assert!(r.is_null());
+    }
+
+    #[test]
+    fn test_match_returns_null_when_element_is_null() {
+        let exp = compile_expr("match('foo', a.c)".to_string()).unwrap();
         let r = exp.search(json!({
             "a": {
                 "b": "bar"
