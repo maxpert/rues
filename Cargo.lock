@@ -1503,6 +1503,7 @@ dependencies = [
  "lazy_static",
  "log",
  "notify",
+ "regex",
  "serde 1.0.132",
  "serde_json",
 ]

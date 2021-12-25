@@ -9,3 +9,7 @@ Content-Type: application/json
 POST http://localhost:8080/eval/filter_active
 Content-Type: application/json
 @./users.json
+
+POST http://localhost:8080/eval/filter_registered
+Content-Type: application/json
+@./users.json

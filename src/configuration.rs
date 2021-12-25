@@ -1,4 +1,4 @@
-use std::{thread};
+use std::{thread, env};
 use std::sync::mpsc::channel;
 use std::sync::RwLock;
 use std::time::Duration;
@@ -9,9 +9,15 @@ use log::{error, info};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 
 lazy_static! {
+    static ref CONFIG_PATH: String = env::var("CONFIG_PATH").unwrap_or_else(|_| {
+        "rules.hjson".to_string()
+    });
+}
+
+lazy_static! {
     static ref SETTINGS: RwLock<Config> = RwLock::new({
         let mut settings = Config::new();
-        settings.merge(File::with_name("rules.hjson")).unwrap();
+        settings.merge(File::with_name(CONFIG_PATH.as_str())).unwrap();
         settings
     });
 }
@@ -19,7 +25,7 @@ lazy_static! {
 fn watch() {
     let (tx, rx) = channel();
     let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1)).unwrap();
-    watcher.watch("rules.hjson", RecursiveMode::NonRecursive).unwrap();
+    watcher.watch(CONFIG_PATH.as_str(), RecursiveMode::NonRecursive).unwrap();
 
     loop {
         match rx.recv() {

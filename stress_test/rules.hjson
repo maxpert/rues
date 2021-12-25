@@ -2,4 +2,5 @@
     filter_role: "[?roles[?@=='dolor']] | length(@)"
     filter_active: "[?isActive] | length(@)"
     filter_age: "[?age<`35`] | length(@)"
+    filter_registered: "[?match('^201\\d', registered)] | length(@)"
 }

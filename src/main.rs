@@ -5,22 +5,19 @@ use actix_server::Server;
 use actix_service::map_config;
 use actix_web::{App, get, HttpResponse, post, Responder, web};
 use actix_web::dev::AppConfig;
-use cached::proc_macro::cached;
-use jmespatch::{Expression as JMESExpression, JmespathError, Rcvar};
+use jmespatch::{JmespathError, Rcvar};
 use log::info;
 use serde_json::{json, Value};
+
+use exp_engine::runtime;
 
 use crate::configuration::{get_rules, init_rules};
 
 mod configuration;
-
-#[cached(size = 512, result = true)]
-fn compile_expr(expr: String) -> Result<JMESExpression<'static>, JmespathError> {
-    jmespatch::compile(expr.as_str())
-}
+mod exp_engine;
 
 fn evaluate_rule(expression: &String, value: &Value) -> Result<Rcvar, JmespathError> {
-    compile_expr(expression.clone())?.search(value)
+    runtime::compile_expr(expression.clone())?.search(value)
 }
 
 #[post("/eval/{rule_name}")]
