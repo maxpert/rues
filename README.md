@@ -1,4 +1,4 @@
-# RuES - JMES Evaluation as Service 
+# RuES - Expression Evaluation as Service 
 
 RuES is a minimal JMES expression evaluation side-car, that uses [JMESPath](https://jmespath.org/) and it can handle 
 arbitrary JSON. Which effectively makes it general purpose logical expression evaluation engine, just like 
