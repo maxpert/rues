@@ -1,0 +1,89 @@
+{
+  "context": [
+    {
+      "_id": "61c37b66baf2400f3be57d38",
+      "index": 0,
+      "guid": "1f88b318-e9d1-4771-8513-a462884695d4",
+      "isActive": true,
+      "age": 40,
+      "eyeColor": "blue",
+      "name": "Osborn Humphrey",
+      "registered": "2018-08-28T02:12:49 +07:00",
+      "roles": [
+        "duis",
+        "consequat",
+        "commodo",
+        "velit"
+      ]
+    },
+    {
+      "_id": "61c37b661180eb452fdb4db1",
+      "index": 1,
+      "guid": "80a527c2-89bf-4b62-98bf-3b3f1fd3dee3",
+      "isActive": false,
+      "age": 32,
+      "eyeColor": "green",
+      "name": "Chapman Gilmore",
+      "registered": "2020-11-07T01:48:29 +08:00",
+      "roles": [
+        "nulla",
+        "veniam",
+        "magna",
+        "dolor",
+        "excepteur"
+      ]
+    },
+    {
+      "_id": "61c37b66f946f69e881899b2",
+      "index": 2,
+      "guid": "a20e49ad-dbba-40af-82f4-eb39ce857fa1",
+      "isActive": false,
+      "age": 25,
+      "eyeColor": "brown",
+      "name": "Tyler Olson",
+      "registered": "2015-04-20T07:22:45 +07:00",
+      "roles": [
+        "enim",
+        "dolor",
+        "Lorem"
+      ]
+    },
+    {
+      "_id": "61c37b66978f905857538f7c",
+      "index": 3,
+      "guid": "5e801fff-7ec1-42f4-9441-70749af40aec",
+      "isActive": false,
+      "age": 35,
+      "eyeColor": "brown",
+      "name": "Amalia Herman",
+      "registered": "2021-08-11T10:57:06 +07:00",
+      "roles": [
+        "do",
+        "sint",
+        "eu",
+        "ad"
+      ]
+    },
+    {
+      "_id": "61c37b668849c5169a678e91",
+      "index": 4,
+      "guid": "f87d06c9-9586-4aeb-b315-5f15572690a7",
+      "isActive": true,
+      "age": 32,
+      "eyeColor": "brown",
+      "name": "Janette Henry",
+      "registered": "2018-10-13T03:01:26 +07:00",
+      "roles": [
+        "sunt",
+        "ea",
+        "sint"
+      ]
+    }
+  ],
+  "rules": [
+    "filter_age",
+    "filter_role",
+    "filter_active",
+    "filter_registered"
+  ]
+}
