@@ -285,6 +285,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23b62fc65de8e4e7f52534fb52b0f3ed04746ae267519eef2a83941e8085068b"
 
 [[package]]
+name = "ascii_utils"
+version = "0.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "71938f30533e4d95a6d17aa530939da3842c2ab6f4f84b9dae68447e4129f74a"
+
+[[package]]
 name = "async-mutex"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -664,6 +670,15 @@ name = "event-listener"
 version = "2.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f7531096570974c3a9dcf9e4b8e1cede1ec26cf5046219fb3b9d897503b9be59"
+
+[[package]]
+name = "fast_chemail"
+version = "0.9.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "495a39d30d624c2caabe6312bfead73e7717692b44e0b32df168c275a2e8e9e4"
+dependencies = [
+ "ascii_utils",
+]
 
 [[package]]
 name = "filetime"
@@ -1119,6 +1134,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mailchecker"
+version = "4.1.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8c2624dc0e39743a404647eca995491dd933fcbd326f4261d02c3a0570cad0be"
+dependencies = [
+ "fast_chemail",
+ "once_cell",
+]
+
+[[package]]
 name = "match_cfg"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1502,6 +1527,7 @@ dependencies = [
  "jmespatch",
  "lazy_static",
  "log",
+ "mailchecker",
  "notify",
  "regex",
  "serde 1.0.132",

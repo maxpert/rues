@@ -23,6 +23,7 @@ lazy_static = "^1.4.0"
 notify = "^4.0.0"
 cached = "^0.26.2"
 regex = "^1.5"
+mailchecker = "^4.1.7"
 
 [[bin]]
 name = "rues"

@@ -18,8 +18,8 @@ impl RegexFn {
         RegexFn {
             signature: Signature::new(
                 vec![
-                    ArgumentType::String,
-                    ArgumentType::Union(vec![ArgumentType::String, ArgumentType::Null])
+                    ArgumentType::Any,
+                    ArgumentType::Any,
                 ],
                 None,
             )
@@ -51,28 +51,13 @@ impl RegexFn {
 impl Function for RegexFn {
     fn evaluate(&self, args: &[Rcvar], ctx: &mut Context<'_>) -> Result<Rcvar, JmespathError> {
         self.signature.validate(args, ctx)?;
-        if args[1].is_null() {
+        if !(args[0].is_string() && args[1].is_string()) {
             return Ok(Rcvar::new(Variable::Null));
         }
 
-        let regex_str = args[0].as_string().ok_or_else(|| {
-            JmespathError::new(
-                "",
-                0,
-                ErrorReason::Parse("Expression argument should be a string".to_owned()),
-            )
-        })?;
-
-        let regex = compile_regex(regex_str.to_owned())?;
-        let payload = args[1].as_string().ok_or_else(|| {
-            JmespathError::new(
-                "",
-                0,
-                ErrorReason::Parse("Payload must be a string".to_owned()),
-            )
-        })?;
-
-        Ok(Rcvar::new(Self::match_regex(regex, payload)))
+        let regex = compile_regex(args[0].as_string().unwrap().to_owned())?;
+        let payload = args[1].as_string().unwrap();
+        return Ok(Rcvar::new(Self::match_regex(regex, payload)));
     }
 }
 
@@ -131,6 +116,25 @@ mod regex_tests {
         })).unwrap();
         assert!(!r.is_truthy());
         assert!(r.is_null());
+    }
+
+    #[test]
+    fn test_match_returns_null_when_non_string_regex() {
+        let exp = compile_expr("match(null, a.c)".to_string()).unwrap();
+        let r = exp.search(json!({
+            "a": {
+                "b": "bar"
+            }
+        })).unwrap();
+        assert!(!r.is_truthy());
+
+        let exp = compile_expr("match(`5`, a.c)".to_string()).unwrap();
+        let r = exp.search(json!({
+            "a": {
+                "b": "bar"
+            }
+        })).unwrap();
+        assert!(!r.is_truthy());
     }
 
     #[test]

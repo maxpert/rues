@@ -128,6 +128,8 @@ additional are following additional functions:
  - ✅ `string[] match(string $regex, string $element)` - Returns an array of all groups of regex matching or a `null` if
    there is no match. Regex specs can be found [here](https://github.com/rust-lang/regex). Regexes are compiled 
    and cached in LRU order.
+ - ✅ `bool valid_email(string $element)` (To be implemented yet) - Returns `true` or `false` based on email format. In 
+   addition to formatting it also excludes temporary email addresses. 
  - 🚧 `number from_datetime(string $element, string $format = 'rfc3339')` (To be implemented yet) - Converts 
    datetime in given format to a timestamp. The timestamp then in turn can be used to 
    do comparisons or reformatting. 
@@ -137,7 +139,6 @@ additional are following additional functions:
    or `false` if the `$element` lies within the `$radius` of `$center`.
  - 🚧 `number[][] filter_in_geo_fence(number[] $center, number $radius, number[][] $elements) ` (To be implemented yet) - 
    Returns all elements that lie within geo fence of given radius and center.
- - 🚧 `bool valid_email(string $element)` (To be implemented yet) - Returns `true` or `false` based on email format.
  - 🚧 `bool match_glob(string $pattern, string $element)` (To be implemented yet) - Returns `true` or `false` 
    if the `$element` is a glob match of the `$pattern`.
 
