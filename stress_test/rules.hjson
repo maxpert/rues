@@ -2,7 +2,7 @@
     filter_role: "[?roles[?@=='dolor']] | length(@)"
     filter_active: "[?isActive] | length(@)"
     filter_age: "[?age<`35`] | length(@)"
-    filter_registered: "[?match('^201\\d', registered)] | length(@)",
+    filter_registered: "[?match(&'^201\\d', registered)]",
     filter_valid_email: "[?valid_email(email)] | length(@)",
     filter_junk_email: "[?!valid_email(email)][email, _id]",
 }

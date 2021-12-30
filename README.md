@@ -125,12 +125,25 @@ The rules will be evaluated in sequence of order they were passed in, and server
 In addition to [built-in functions](https://jmespath.org/proposals/functions.html#built-in-functions) of JMES, there 
 additional are following additional functions:
 
- - ✅ `string[] match(string $regex, string $element)` - Returns an array of all groups of regex matching or a `null` if
-   there is no match. Regex specs can be found [here](https://github.com/rust-lang/regex). Regexes are compiled 
-   and cached in LRU order.
+ - ✅ `string[] match(expref string $regex, string $element)` - Returns an array of all groups of regex matching 
+   or a `null` if there is no match. Regex specs can be found [here](https://github.com/rust-lang/regex). 
+   Regexes are compiled and cached in LRU order. The given Regex has to be an expression with string 
+   literal e.g. `&'\d+'` this is required so that regexes are always string literal and never 
+   variables eliminating any possibility of regex injection via variables, preventing any
+   exploits or accidental explosion of regex patterns. Examples:
+   ```jmes
+   [?match(&'^[a-z0-9_-]{3,16}$', username)]
+   [?match(&'^[a-z0-9_-]{3,16}$', 'user_123')]
+   [?match(&'([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))', date)]
+   ```
  - ✅ `bool valid_email(string $element)` (To be implemented yet) - Returns `true` or `false` based on email format. In 
-   addition to formatting it also excludes temporary email addresses. 
- - 🚧 `number from_datetime(string $element, string $format = 'rfc3339')` (To be implemented yet) - Converts 
+   addition to formatting it also excludes temporary email addresses. Examples:
+   ```jmes
+   [?valid_email('user123@gmail.com')]
+   [?!valid_email('janette@guerrillamailblock.com')]
+   [?valid_email(contact.email)]
+   ```
+ - 🚧 `number parse_datetime(string $element, string $format = 'rfc3339')` (To be implemented yet) - Converts 
    datetime in given format to a timestamp. The timestamp then in turn can be used to 
    do comparisons or reformatting. 
  - 🚧 `string to_datetime(number $element, , string $format = 'rfc3339')` (To be implemented yet) - Converts

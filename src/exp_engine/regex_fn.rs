@@ -1,5 +1,6 @@
 use cached::proc_macro::cached;
 use jmespatch::{Context, ErrorReason, JmespathError, Rcvar, Variable};
+use jmespatch::ast::Ast;
 use jmespatch::functions::{ArgumentType, Function, Signature};
 use regex::{Match, Regex};
 
@@ -46,18 +47,38 @@ impl RegexFn {
             Variable::Array(matches)
         }).unwrap_or(Variable::Null)
     }
+
+    fn string_literal<'s>(var: &'s Rcvar, ctx: &Context<'_>) -> Result<&'s str, JmespathError> {
+        return match var.as_expref() {
+            Some(Ast::Literal { ref value, .. }) => {
+                match value.as_string() {
+                    Some(str) => Ok(str.as_str()),
+                    _ => Err(JmespathError::from_ctx(
+                        ctx,
+                        ErrorReason::Parse("Literal must be a string".to_owned()),
+                    ))
+                }
+            },
+            _ => {
+                Err(JmespathError::from_ctx(
+                    ctx,
+                    ErrorReason::Parse("Not a string literal".to_owned()),
+                ))
+            }
+        };
+    }
 }
 
 impl Function for RegexFn {
     fn evaluate(&self, args: &[Rcvar], ctx: &mut Context<'_>) -> Result<Rcvar, JmespathError> {
         self.signature.validate(args, ctx)?;
-        if !(args[0].is_string() && args[1].is_string()) {
-            return Ok(Rcvar::new(Variable::Null));
-        }
+        let re_str = Self::string_literal(&args[0], ctx)?;
+        let regex = compile_regex(re_str.to_owned())?;
 
-        let regex = compile_regex(args[0].as_string().unwrap().to_owned())?;
-        let payload = args[1].as_string().unwrap();
-        return Ok(Rcvar::new(Self::match_regex(regex, payload)));
+        return match args[1].as_string() {
+            Some(payload) => Ok(Rcvar::new(Self::match_regex(regex, payload))),
+            None => Ok(Rcvar::new(Variable::Null))
+        };
     }
 }
 
@@ -81,7 +102,7 @@ mod regex_tests {
 
     #[test]
     fn test_match_returns_matched_segments_in_regex() {
-        let exp = compile_expr("match('foo', a.b)".to_string()).unwrap();
+        let exp = compile_expr("match(&'foo', a.b)".to_string()).unwrap();
         let r = exp.search(json!({
             "a": {
                 "b": "food"
@@ -96,7 +117,7 @@ mod regex_tests {
 
     #[test]
     fn test_match_returns_null_unmatched_segments_in_regex() {
-        let exp = compile_expr("match('foo', a.b)".to_string()).unwrap();
+        let exp = compile_expr("match(&'foo', a.b)".to_string()).unwrap();
         let r = exp.search(json!({
             "a": {
                 "b": "bar"
@@ -108,7 +129,7 @@ mod regex_tests {
 
     #[test]
     fn test_match_returns_null_when_element_is_null() {
-        let exp = compile_expr("match('foo', a.c)".to_string()).unwrap();
+        let exp = compile_expr("match(&'foo', a.c)".to_string()).unwrap();
         let r = exp.search(json!({
             "a": {
                 "b": "bar"
@@ -119,27 +140,8 @@ mod regex_tests {
     }
 
     #[test]
-    fn test_match_returns_null_when_non_string_regex() {
-        let exp = compile_expr("match(null, a.c)".to_string()).unwrap();
-        let r = exp.search(json!({
-            "a": {
-                "b": "bar"
-            }
-        })).unwrap();
-        assert!(!r.is_truthy());
-
-        let exp = compile_expr("match(`5`, a.c)".to_string()).unwrap();
-        let r = exp.search(json!({
-            "a": {
-                "b": "bar"
-            }
-        })).unwrap();
-        assert!(!r.is_truthy());
-    }
-
-    #[test]
     fn test_match_returns_multiple_segments() {
-        let exp = compile_expr(r"match('(\d{4})-(\d{2})-(\d{2})', a)".to_string()).unwrap();
+        let exp = compile_expr(r"match(&'(\d{4})-(\d{2})-(\d{2})', a)".to_string()).unwrap();
         let r = exp.search(json!({
             "a": "2010-03-14"
         })).unwrap();
