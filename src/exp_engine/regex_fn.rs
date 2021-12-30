@@ -4,6 +4,8 @@ use jmespatch::ast::Ast;
 use jmespatch::functions::{ArgumentType, Function, Signature};
 use regex::{Match, Regex};
 
+const ERROR_MSG: &str = "Regex must be a literal string please only use &'...'";
+
 pub struct RegexFn {
     signature: Signature,
 }
@@ -55,14 +57,14 @@ impl RegexFn {
                     Some(str) => Ok(str.as_str()),
                     _ => Err(JmespathError::from_ctx(
                         ctx,
-                        ErrorReason::Parse("Literal must be a string".to_owned()),
+                        ErrorReason::Parse(ERROR_MSG.to_owned()),
                     ))
                 }
             },
             _ => {
                 Err(JmespathError::from_ctx(
                     ctx,
-                    ErrorReason::Parse("Not a string literal".to_owned()),
+                    ErrorReason::Parse(ERROR_MSG.to_owned()),
                 ))
             }
         };
