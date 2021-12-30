@@ -60,7 +60,7 @@ impl RegexFn {
                         ErrorReason::Parse(ERROR_MSG.to_owned()),
                     ))
                 }
-            },
+            }
             _ => {
                 Err(JmespathError::from_ctx(
                     ctx,
@@ -98,8 +98,10 @@ fn compile_regex(regex_str: String) -> Result<Regex, JmespathError> {
 
 #[cfg(test)]
 mod regex_tests {
+    use jmespatch::{ErrorReason, JmespathError};
     use serde_json::json;
 
+    use crate::exp_engine::regex_fn::ERROR_MSG;
     use crate::exp_engine::runtime::compile_expr;
 
     #[test]
@@ -154,5 +156,41 @@ mod regex_tests {
         assert_eq!(matches[1].as_string().unwrap(), "2010");
         assert_eq!(matches[2].as_string().unwrap(), "03");
         assert_eq!(matches[3].as_string().unwrap(), "14");
+    }
+
+    #[test]
+    fn test_match_wont_compile_non_literal_regex() {
+        let exp = compile_expr(r"match(a, a)".to_string()).unwrap();
+        let r = exp.search(json!({
+            "a": "2010-03-14"
+        }));
+
+        match r.err() {
+            Some(
+                JmespathError {
+                    reason: ErrorReason::Parse(ref reason),
+                    ..
+                }
+            ) => assert_eq!(reason, ERROR_MSG),
+            _ => assert!(false),
+        };
+    }
+
+    #[test]
+    fn test_match_wont_compile_non_ref_literal_regex() {
+        let exp = compile_expr(r"match('a', a)".to_string()).unwrap();
+        let r = exp.search(json!({
+            "a": "2010-03-14"
+        }));
+
+        match r.err() {
+            Some(
+                JmespathError {
+                    reason: ErrorReason::Parse(ref reason),
+                    ..
+                }
+            ) => assert_eq!(reason, ERROR_MSG),
+            _ => assert!(false),
+        };
     }
 }
