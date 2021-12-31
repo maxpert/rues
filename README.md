@@ -143,6 +143,21 @@ additional are following additional functions:
    [?!valid_email('janette@guerrillamailblock.com')]
    [?valid_email(contact.email)]
    ```
+ - ✅ `object[] phone_number(string $element, [optional_country_codes string[]])` - Returns parsed phone number for
+   international (when `optional_country_codes` is not passed) or given country format. If the number is not valid, 
+   it is omitted from results, in case of empty result `null` is returned. Examples:
+   ```jmes
+   > phone_number('033316005', ['nz'])
+   [{"carrier":null,"country":"NZ","country_code":64,"from":"NZ","national":33316005,"national_zeros":0,"valid":true}]
+   > phone_number('(541) 754-3010', ['us', 'fr', 'de'])
+   [{"carrier":null,"country":"US","country_code":1,"from":"US","national":5417543010,"national_zeros":0,"valid":true},{"carrier":null,"country":"DE","country_code":49,"from":"DE","national":5417543010,"national_zeros":0,"valid":true}]
+   > phone_number('(089) / 636-48018', ['us', 'fr', 'de'])
+   [{"carrier":null,"country":"DE","country_code":49,"from":"DE","national":8963648018,"national_zeros":0,"valid":true}]
+   > phone_number('(541) 754-3010', ['nz', 'ch'])
+   null
+   > phone_number('+33-655-562-025')
+   {"carrier":null,"country":"FR","country_code":33,"from":null,"national":655562025,"national_zeros":0,"valid":true}
+   ```
  - 🚧 `number parse_datetime(string $element, string $format = 'rfc3339')` (To be implemented yet) - Converts 
    datetime in given format to a timestamp. The timestamp then in turn can be used to 
    do comparisons or reformatting. 

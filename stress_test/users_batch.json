@@ -8,7 +8,9 @@
       "age": 40,
       "eyeColor": "blue",
       "name": "Osborn Humphrey",
+      "email": "osborn.h@gmail.com",
       "registered": "2018-08-28T02:12:49 +07:00",
+      "phone": "+1 (650) 429-2842",
       "roles": [
         "duis",
         "consequat",
@@ -24,7 +26,9 @@
       "age": 32,
       "eyeColor": "green",
       "name": "Chapman Gilmore",
+      "email": "chapman@gmail.com",
       "registered": "2020-11-07T01:48:29 +08:00",
+      "phone": "+1 (650) 593-2583",
       "roles": [
         "nulla",
         "veniam",
@@ -41,7 +45,9 @@
       "age": 25,
       "eyeColor": "brown",
       "name": "Tyler Olson",
+      "email": "tylero@yandex.com",
       "registered": "2015-04-20T07:22:45 +07:00",
+      "phone": "+33 (655) 562-025",
       "roles": [
         "enim",
         "dolor",
@@ -56,7 +62,9 @@
       "age": 35,
       "eyeColor": "brown",
       "name": "Amalia Herman",
+      "email": "amalia@guerrillamailblock.com",
       "registered": "2021-08-11T10:57:06 +07:00",
+      "phone": "+91 (903) 593-3044",
       "roles": [
         "do",
         "sint",
@@ -72,7 +80,9 @@
       "age": 32,
       "eyeColor": "brown",
       "name": "Janette Henry",
+      "email": "janette@guerrillamailblock.com",
       "registered": "2018-10-13T03:01:26 +07:00",
+      "phone": "+91 (903) 645-3044",
       "roles": [
         "sunt",
         "ea",
@@ -81,9 +91,6 @@
     }
   ],
   "rules": [
-    "filter_age",
-    "filter_role",
-    "filter_active",
-    "filter_registered"
+    "filter_usa_phone"
   ]
 }

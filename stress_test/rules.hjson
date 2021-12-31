@@ -5,4 +5,5 @@
     filter_registered: "[?match(&'^201\\d', registered)]",
     filter_valid_email: "[?valid_email(email)] | length(@)",
     filter_junk_email: "[?!valid_email(email)][email, _id]",
+    filter_usa_phone: "[?phone_number(phone).country == 'US'][email, phone, _id]"
 }
