@@ -136,7 +136,7 @@ additional are following additional functions:
    [?match(&'^[a-z0-9_-]{3,16}$', 'user_123')]
    [?match(&'([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))', date)]
    ```
- - ✅ `bool valid_email(string $element)` (To be implemented yet) - Returns `true` or `false` based on email format. In 
+ - ✅ `bool valid_email(string $element)` - Returns `true` or `false` based on email format. In 
    addition to formatting it also excludes temporary email addresses. Examples:
    ```jmes
    [?valid_email('user123@gmail.com')]
