@@ -143,10 +143,26 @@ additional are following additional functions:
    [?!valid_email('janette@guerrillamailblock.com')]
    [?valid_email(contact.email)]
    ```
- - 🚧 `number parse_datetime(string $element, string $format = 'rfc3339')` (To be implemented yet) - Converts 
+ - ✅ `number now()` - Returns current time unix timestamp as 64-bit float with number of seconds since `1970-01-01`
+   the fractional part of timestamp contains upto microseconds of the timestamp. Examples:
+   ```jmes
+   now()
+   > 1641257813.803243
+   ```
+ - ✅ `number duration(string $element)` - Parses a duration string with same specs as 
+   [systemd.time](https://www.freedesktop.org/software/systemd/man/systemd.time.html#Parsing%20Time%20Spans) and returns
+   a unix timestamp just like `now`. This will allow anyone to perform addition/subtraction operations on timestamps,
+   Examples:
+   ```jmes
+   duration('1min100ms')
+   > 60.1
+   duration('1h')
+   > 360.0
+   ```
+ - 🚧 `number parse_datetime(string $element[, string $format = 'rfc3339'])` (To be implemented yet) - Converts 
    datetime in given format to a timestamp. The timestamp then in turn can be used to 
    do comparisons or reformatting. 
- - 🚧 `string to_datetime(number $element, , string $format = 'rfc3339')` (To be implemented yet) - Converts
+ - 🚧 `string to_datetime(number $element[, string $format = 'rfc3339'])` (To be implemented yet) - Converts
    timestamp to a given string format.
  - 🚧 `bool in_geo_fence(number[] $center, number $radius, number[] $element)` (To be implemented yet) - Returns `true`
    or `false` if the `$element` lies within the `$radius` of `$center`.

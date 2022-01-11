@@ -24,6 +24,8 @@ notify = "^4.0.0"
 cached = "^0.26.2"
 regex = "^1.5"
 mailchecker = "^4.1.7"
+chrono = "^0.4"
+parse_duration = "^2.1.1"
 
 [[bin]]
 name = "rues"
